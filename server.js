@@ -25,8 +25,6 @@ const imageArray = [
 
 let apiData = [];
 
-
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -40,7 +38,6 @@ if(process.env.NODE_ENV === "production"){
 	// 	res.sendFile(path.resolve(__dirname, 'appattic_client','build', 'index.html'));
 	// });
 }
-
 
 app.get('/api', (req, res) => {
 	let index = Math.floor(Math.random()*imageArray.length);
