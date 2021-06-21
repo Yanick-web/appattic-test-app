@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const morgan = require('morgan');
 const path = require('path');
 const port = process.env.PORT || 5000;
 const imageArray = [
@@ -22,21 +23,30 @@ const imageArray = [
 	"https://images.unsplash.com/photo-1489447068241-b3490214e879?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a85cb0d68de38ae2aa00d8a9663a320a&auto=format&fit=crop&w=1350&q=80"
 ];
 
+
+
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: false}));
+app.use(morgan('tiny'));
 
 
 if(process.env.NODE_ENV === "production"){
 	app.use(express.static('appattic_client/build'));
 
-	app.get('*', (req, res)=>{
-		res.sendFile(path.resolve(__dirname, 'appattic_client','build', 'index.html'));
-	});
+	// app.get('*', (req, res)=>{
+	// 	res.sendFile(path.resolve(__dirname, 'appattic_client','build', 'index.html'));
+	// });
 }
 
 
-app.post('/api/post', (req, res) => {
+app.get('/api', (req, res) => {
+	// let index = Math.floor(Math.random()*imageArray.length);
+	// let url = imageArray[index];
+    res.json({data: "You hit the route"});
+});
+
+app.post('/api/save', (req, res) => {
 	let index = Math.floor(Math.random()*imageArray.length);
 	let url = imageArray[index];
     res.json({data: req.body, url: url});

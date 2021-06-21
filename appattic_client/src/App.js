@@ -1,7 +1,7 @@
 import enTranslations from '@shopify/polaris/locales/en.json';
 import {AppProvider} from '@shopify/polaris';
 import MyForm from './Form';
-import Axios from 'axios';
+import axios from 'axios';
 import {useState, useRef} from 'react';
 
 
@@ -29,7 +29,12 @@ const [color, setColor] = useState({
 
 const handleSubmit = (e)=>{
   e.preventDefault();
-Axios.post("http://localhost:5000/api/post", {text, color})
+  const  payload = {text: text, color: color};
+axios({
+  url: "http://localhost:5000/api/save", 
+  method:'POST',
+  data: payload
+})
 .then(res => {
   setColoredText(res.data.data.text);
   imageRef.current.src = res.data.url;
