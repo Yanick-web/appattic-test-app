@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const path = require('path');
 const port = process.env.PORT || 5000;
 const imageArray = [
 	"https://images.unsplash.com/photo-1508185159346-bb1c5e93ebb4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=55cf14db6ed80a0410e229368963e9d8&auto=format&fit=crop&w=1900&q=80",
@@ -28,6 +29,10 @@ app.use(express.urlencoded({extended: true}));
 
 if(process.env.NODE_ENV === "production"){
 	app.use(express.static('appattic_client/build'));
+
+	app.get('*', (req, res)=>{
+		res.sendFile(path.resolve(__dirname, 'appattic_client','build', 'index.html'));
+	});
 }
 
 
@@ -39,5 +44,5 @@ app.post('/api/post', (req, res) => {
 
 app.listen(port , (err) => {
     if(err) console.error(err);
-    console.log('Server running on port 5000');
+    console.log(`Server running on ${port}`);
 })
