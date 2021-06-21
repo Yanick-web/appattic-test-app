@@ -51,14 +51,14 @@ app.get('/api', (req, res) => {
 			alpha: 1
 		}
 	}
-	if(apiData.length === 0){
-		res.json({data: dummy, url})
-	}
-	else{
+	if(apiData.length !== 0){
+		
 		const data = apiData[apiData.length - 1]
 		console.log(apiData);
 		res.json({data, url });
-		apiData = [];
+	}
+	else{
+		res.json({data: dummy, url})
 	}
     
 });

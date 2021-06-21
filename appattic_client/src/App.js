@@ -37,7 +37,7 @@ axios({
   data: payload
 })
 .then(res => {
-  console.log("data sent to server");
+  console.log("saved");
 })
 .catch(err => {
   console.error(err);
@@ -50,7 +50,6 @@ setSubmitted(!submitted);
 useEffect(()=>{
 axios.get('/api')
 .then((res) =>{
-  console.log(res.data.data);
   setColoredText(res.data.data.text);
   imageRef.current.src = res.data.url;
   paraRef.current.style.color = `hsla(${Math.floor(res.data.data.color.hue)}, ${Math.floor(res.data.data.color.saturation*100)}%, ${Math.floor(res.data.data.color.brightness*100)}%, ${res.data.data.color.alpha})`;
