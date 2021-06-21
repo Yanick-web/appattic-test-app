@@ -23,6 +23,8 @@ const imageArray = [
 	"https://images.unsplash.com/photo-1489447068241-b3490214e879?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a85cb0d68de38ae2aa00d8a9663a320a&auto=format&fit=crop&w=1350&q=80"
 ];
 
+let apiData = [];
+
 
 
 app.use(cors());
@@ -41,15 +43,32 @@ if(process.env.NODE_ENV === "production"){
 
 
 app.get('/api', (req, res) => {
-	// let index = Math.floor(Math.random()*imageArray.length);
-	// let url = imageArray[index];
-    res.json({data: "You hit the route"});
+	let index = Math.floor(Math.random()*imageArray.length);
+	let url = imageArray[index];
+	const dummy = {
+		text: "Your quote",
+		color: {
+			hue:120,
+			saturation: 10,
+			brightness: 10,
+			alpha: 1
+		}
+	}
+	if(apiData.length === 0){
+		res.json({data: dummy, url})
+	}
+	else{
+		const data = apiData[apiData.length - 1]
+		console.log(apiData);
+		res.json({data, url });
+		apiData = [];
+	}
+    
 });
 
 app.post('/api/save', (req, res) => {
-	let index = Math.floor(Math.random()*imageArray.length);
-	let url = imageArray[index];
-    res.json({data: req.body, url: url});
+	apiData.push(req.body);
+    res.json({data:req.body});
 });
 
 app.listen(port , (err) => {

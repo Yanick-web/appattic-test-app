@@ -37,11 +37,13 @@ body{
   background-color: transparent;
   width: 50%;
   height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
   font-style: italic;
   font-weight: 900;
   font-size: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   line-height: 2ch;
+  overflow: hidden;
 }
