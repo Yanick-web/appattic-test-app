@@ -5,7 +5,7 @@ import axios from 'axios';
 import {useState, useRef, useEffect} from 'react';
 
 
-const defaultUrl = "https://images.unsplash.com/photo-1621715363767-45e51c41c6f0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1944&q=80";
+const defaultUrl = "https://images.unsplash.com/photo-1515966306809-37aaff37a72f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTI4fHxkYXJrfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60";
 
 const textSize = (str) =>{
   let len = str.length;
