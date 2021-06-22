@@ -18,6 +18,7 @@ const textSize = (str) =>{
 function App() {
 const [text, setText] = useState("Your quote");
 const [coloredText, setColoredText] = useState("Your quote");
+// const [submitted, setSubmitted] = useState(false);
 const paraRef = useRef();
 const imageRef = useRef();
 const [color, setColor] = useState({
@@ -29,16 +30,11 @@ const [color, setColor] = useState({
 
 const handleSubmit = (e)=>{
   e.preventDefault();
-  const  payload = {text: text, color: color};
-axios({
-  url: "http://localhost:5000/api", 
-  method:'POST',
-  data: payload
-})
+axios.get('/api')
 .then(res => {
-  setColoredText(res.data.data.text);
+  setColoredText(text);
   imageRef.current.src = res.data.url;
-  paraRef.current.style.color = `hsla(${Math.floor(res.data.data.color.hue)}, ${Math.floor(res.data.data.color.saturation*100)}%, ${Math.floor(res.data.data.color.brightness*100)}%, ${res.data.data.color.alpha})`;
+  paraRef.current.style.color = `hsla(${Math.floor(color.hue)}, ${Math.floor(color.saturation*100)}%, ${Math.floor(color.brightness*100)}%, ${color.alpha})`;
 })
 .catch(err => {
   console.error(err);
@@ -49,19 +45,17 @@ axios({
 
 useEffect(()=>{
 
-axios({
-  url: 'http://localhost:5000/api',
-  method: 'POST',
-  data: {text, color}
-})
+axios.get('/api')
 .then((res) =>{
-  setColoredText(res.data.data.text);
+  setColoredText(text);
   imageRef.current.src = res.data.url;
-  paraRef.current.style.color = `hsla(${Math.floor(res.data.data.color.hue)}, ${Math.floor(res.data.data.color.saturation*100)}%, ${Math.floor(res.data.data.color.brightness*100)}%, ${res.data.data.color.alpha})`;
+  paraRef.current.style.color = `hsla(${Math.floor(color.hue)}, ${Math.floor(color.saturation*100)}%, ${Math.floor(res.dabrightness*100)}%, ${color.alpha})`;
 })
 .catch((err) =>{
   console.error(err);
 })
+
+
 }, []);
 
 

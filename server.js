@@ -40,10 +40,10 @@ if(process.env.NODE_ENV === "production"){
 
 
 
-app.post('/api', (req, res) => {
+app.get('/api', (req, res) => {
 	let index = Math.floor(Math.random()*imageArray.length);
 	let url = imageArray[index];
-    res.json({data:req.body, url});
+    res.json({url});
 });
 
 app.listen(port , (err) => {
