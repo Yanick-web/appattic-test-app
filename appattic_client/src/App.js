@@ -18,7 +18,6 @@ const textSize = (str) =>{
 function App() {
 const [text, setText] = useState("Your quote");
 const [coloredText, setColoredText] = useState("Your quote");
-const [submitted, setSubmitted] = useState(false);
 const paraRef = useRef();
 const imageRef = useRef();
 const [color, setColor] = useState({
@@ -32,23 +31,29 @@ const handleSubmit = (e)=>{
   e.preventDefault();
   const  payload = {text: text, color: color};
 axios({
-  url: "http://localhost:5000/api/save", 
+  url: "http://localhost:5000/api", 
   method:'POST',
   data: payload
 })
 .then(res => {
-  console.log("saved");
+  setColoredText(res.data.data.text);
+  imageRef.current.src = res.data.url;
+  paraRef.current.style.color = `hsla(${Math.floor(res.data.data.color.hue)}, ${Math.floor(res.data.data.color.saturation*100)}%, ${Math.floor(res.data.data.color.brightness*100)}%, ${res.data.data.color.alpha})`;
 })
 .catch(err => {
   console.error(err);
 });
 
-setSubmitted(!submitted);
 
 };
 
 useEffect(()=>{
-axios.get('/api')
+
+axios({
+  url: 'http://localhost:5000/api',
+  method: 'POST',
+  data: {text, color}
+})
 .then((res) =>{
   setColoredText(res.data.data.text);
   imageRef.current.src = res.data.url;
@@ -57,7 +62,7 @@ axios.get('/api')
 .catch((err) =>{
   console.error(err);
 })
-}, [submitted]);
+}, []);
 
 
   return (
